@@ -1,20 +1,18 @@
-
-
-def ericFunction( input_ ):
-    print(input_)
+import os
+os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"] = str(pow(2,40))
+from mmdet.apis import init_detector
+from mmrotate.apis import inference_detector_by_patches
+import mmrotate
+import torch
+import cv2
+import numpy as np
+from mmengine.config import Config
 
 
 #------------- GET Model Inference --------------------------------------------------#
 
 def infer_model(input_file_path, thres,gpu_id):
-	import os
-	os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"] = str(pow(2,40))
-	from mmdet.apis import init_detector, show_result_pyplot
-	from mmrotate.apis import inference_detector_by_patches
-	import mmrotate
-	import torch
-	import cv2
-	import numpy as np
+	
 	#print(mmrotate)
 	#mmrotate.__version__=='0.3.4'
 
@@ -38,12 +36,12 @@ def infer_model(input_file_path, thres,gpu_id):
 	#img = np.array(img)
 	#-----
 	choose_epoch = 9
-	checkpoint_file = f"/mnt/hdd/eric/.tmp_ipy/00.Checkpoint/ship_tmp/epoch_{choose_epoch}.pth"
+	checkpoint_file = f"/data/00.Checkpoint/ship_tmp/epoch_{choose_epoch}.pth"
 	#checkpoint_file = "/mnt/hdd/eric/.tmp_ipy/00.Checkpoint/ship_tmp_multi/epoch_15.pth"
-	config_file = '/mnt/hdd/eric/.tmp_ipy/00.Checkpoint/KARI_tmp/kari_fine_tunning.py'
+	config_file = '/data/00.Checkpoint/KARI_tmp/kari_fine_tunning.py'
 	#config_file = "/mnt/hdd/eric/.tmp_ipy/00.Checkpoint/ship_tmp_multi/ship_fine_tunning.py"
 
-	from mmcv import Config
+
 	cfg = Config.fromfile(config_file)
 
 	#----- classes
@@ -73,10 +71,12 @@ def infer_model(input_file_path, thres,gpu_id):
 	cfg.seed=22
 
 	# random seed
-	from mmdet.apis import set_random_seed
-	set_random_seed(cfg.seed,deterministic=True)
-
-	model = init_detector( cfg, checkpoint_file,device=f'cuda:{cfg.gpu_ids}')
+	#from mmdet.apis import set_random_seed
+	#set_random_seed(cfg.seed,deterministic=True)
+	
+	model = init_detector( config_file, checkpoint_file,device=f'cuda:{cfg.gpu_ids}')
+	
+	#model = init_detector( cfg, checkpoint_file,device=f'cuda:{cfg.gpu_ids}')
 	print("#------------------- init detection")
 	from easydict import EasyDict
 

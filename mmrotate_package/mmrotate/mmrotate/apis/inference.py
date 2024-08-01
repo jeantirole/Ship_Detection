@@ -34,6 +34,7 @@ def inference_detector_by_patches(model,
     Returns:
         list[np.ndarray]: Detection results.
     """
+    print("# ---- batch_size ---------------------------- # : ",bs)
     assert bs >= 1, 'The batch size must greater than or equal to 1'
     cfg = model.cfg
     device = next(model.parameters()).device  # model device
@@ -46,6 +47,8 @@ def inference_detector_by_patches(model,
     if not isinstance(img, np.ndarray):
         img = mmcv.imread(img)
     height, width = img.shape[:2]
+    print("# ---- image sizes ---------------------------- # : ",sizes)
+    print("# ---- steps ---------------------------- # : ",steps) 
     sizes, steps = get_multiscale_patch(sizes, steps, ratios)
     windows = slide_window(width, height, sizes, steps)
 

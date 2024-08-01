@@ -49,6 +49,7 @@ def inference_detector_by_patches(model,
     height, width = img.shape[:2]
     print("# ---- image sizes ---------------------------- # : ",sizes)
     print("# ---- steps ---------------------------- # : ",steps) 
+    print("# ---- ratios ---------------------------- # : ",ratios) 
     sizes, steps = get_multiscale_patch(sizes, steps, ratios)
     windows = slide_window(width, height, sizes, steps)
 

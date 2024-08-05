@@ -39,20 +39,26 @@ def infer_model(input_file_path,checkpoint_file, config_file,thres,gpu_id):
 	args.img = img
 
 	#---------------------------------------------
-	# hyper params for inference
-	args.patch_sizes = [512] # 512
-	args.patch_steps = [384] # 384
-	args.img_ratios = [0.5,1.0,1.5]
-	args.merge_iou_thr = 0.1
-	args.infer_batch_size= 64
-
-	'''
-	#1 차중 위성영상 최적화 파라미터
 	args.patch_sizes = [1024]
 	args.patch_steps = [896]
 	args.img_ratios = [1.0]
 	args.merge_iou_thr = 0.1
 	args.infer_batch_size= 32
+
+	'''
+	#1 차중 위성영상 parmas
+	args.patch_sizes = [1024]
+	args.patch_steps = [896]
+	args.img_ratios = [1.0]
+	args.merge_iou_thr = 0.1
+	args.infer_batch_size= 32
+ 
+	#2 Sentinel params
+	args.patch_sizes = [512] # 512
+	args.patch_steps = [384] # 384
+	args.img_ratios = [0.5,1.0,1.5]
+	args.merge_iou_thr = 0.1
+	args.infer_batch_size= 64
 	
 	'''
 	#---------------------------------------------
